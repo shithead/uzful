@@ -132,10 +132,15 @@ end
 
 
 local function get_command(pid)
+    os = awful.util.pread("uname")
     if pid == 0 then
         return ""
     else
-        return awful.util.pread("ps --no-headers o args " .. pid)
+        if os == "FreeBSD\n" then
+            return awful.util.pread("ps -o command=\"\" " .. pid)
+        else
+            return awful.util.pread("ps --no-headers o args " .. pid)
+        end
     end
 end
 
