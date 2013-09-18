@@ -11,6 +11,7 @@ local setmetatable = setmetatable
 local io = require('io')
 local awful = require('awful')
 local wibox = require('wibox')
+local getinfo = require('uzful.getinfo')
 local beautiful = require("beautiful")
 local capi = {
     awesome = awesome,
@@ -132,11 +133,10 @@ end
 
 
 local function get_command(pid)
-    os = awful.util.pread("uname")
     if pid == 0 then
         return ""
     else
-        if os == "FreeBSD\n" then
+        if getinfo.os().BSD then
             return awful.util.pread("ps -o command=\"\" " .. pid)
         else
             return awful.util.pread("ps --no-headers o args " .. pid)
