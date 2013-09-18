@@ -7,6 +7,7 @@
 
 local io = io
 local table = table
+local util = require('awful.util')
 local string = string
 local assert = assert
 
@@ -50,4 +51,18 @@ function cpu_count()
     return #local_cpus()
 end
 
+-- Operation System
+-- @return list of OS information
+function os()
+	local ret = {}
+	local uname = string.lower( util.pread("uname") )
+	ret.version = util.pread("uname	-r")
+	ret.name = util.pread("hostname")
+	if string.match(uname, "bsd") then
+		ret.BSD = ret.version
+	elseif string.match(uname, "linux") then
+		ret.LINUX = ret.version
+	end
+	return ret
+end
 
