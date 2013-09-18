@@ -153,6 +153,8 @@ local function load(filename)
     if f ~= nil then
         f:close()
         data = require(filename)
+    else
+        print("* savepoint file not found")
     end
 
     return data
